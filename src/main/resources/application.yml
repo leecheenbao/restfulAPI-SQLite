@@ -1,0 +1,22 @@
+server:
+
+  port: 8080
+  servlet:
+    context-path: /emp
+    
+spring:
+  thymeleaf:    enabled: true
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:D:\\software\\sqlite\\springboot.db
+    username:
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+      naming:         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    
+  
