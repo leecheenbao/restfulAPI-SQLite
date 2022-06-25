@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<meta charset="utf-8" />
+<title>spring boot - vue</title>
+<body>
+	<div class="header"></div>
+	<div class="container ">
+	
+		<div class="row">
+			<div class="col-4 ">
+				<button type="button" class="mx-auto btn btn-primary">Add</button>
+			</div>
+			<div class="col-4">
+				<button type="button" class="btn btn-secondary">Save</button>
+
+			</div>
+			<div class="col-4" id="app1">
+				<button type="button" class="btn btn-success" v-on:click="btnText">Update</button>
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Birthday</th>
+					<th scope="col">Salary</th>
+					<th scope="col">Address</th>
+				</tr>
+			</thead>
+			
+			<form @submit.prevent="storeContact">
+				<tbody id='app'>
+					<tr v-for="data in employee">
+						<td>
+							<input type="text" :value="data.name"/>
+						</td>
+						<td>
+							<input type="text" :value="data.dateOfBirth"/>
+						</td>
+						<td>
+							<input type="range" min="0" max="100000" :value="data.salary" />
+						</td>
+						<td>
+							<input type="text" :value="data.address"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text"/>
+						</td>
+						<td>
+							<input type="text"/>
+						</td>
+						<td>
+							<input type="range" min="0" max="100000" />
+						</td>
+						<td>
+							<input type="text"/>
+						</td>
+					</tr>
+				</tbody>
+			</form>
+		</table>
+	</div>
+	
+	<div class="footer"></div>
+</body>
+
+<script>
+	new Vue({
+	  el: "#app1",
+	  data() { 
+	    return {
+	      btnText: "CLICK"
+	    }
+	  },
+	  methods: {
+	    lookAtAlert() {
+	      console.log("HELLO ?")
+	    }
+	  },
+	})
+</script>
+
+<script>
+  const app = {
+			  data() {
+			    return {
+			      employee:''
+			    }
+			  },
+			  mounted () {
+			    axios
+			      .get('http://localhost:8080/emp/getEmp')
+			      .then(response => (this.employee = response.data))
+			      .catch(function (error) {
+			        console.log(error);
+			    });
+			  }
+			}
+			 
+			new Vue.createApp(app).mount('#app')
+			
+//   function storeContact() {
+//       axios.post('post', {
+//         name: 'employee.name',
+//         dateOfBirth: 'employee.dateOfBirth',
+//         salary: 'employee.salary',
+//         address: 'employee.address'
+//       })
+//         .then((res) => {
+//           onSuccess(res.data.message)
+//         })
+//         .catch((error) => {
+//           onFailure(error.response.data.message)
+//         })
+//     };
+//     return {
+//       success,
+//       error,
+//       name,
+//       dateOfBirth,
+//       message,
+//       storeContact
+//     }
+</script>
+</html>
